@@ -149,5 +149,28 @@ class Student_model extends CI_Model
                                 ->update('fees',$data);
         }
 
+
+/*fetch data*/
+public function fetch_data($query)
+ {
+            $this->db->select(['fees.id','students.fname','students.lname','fees.amount','fees.paid_date','fees.description']);
+            $this->db->from("fees");
+            $this->db->join("students",'fees.student_id = students.id');
+                
+  if($query != '')
+  {
+   $this->db->like('amount', $query);
+   $this->db->or_like('paid_date', $query);
+   $this->db->or_like('description', $query);
+   $this->db->or_like('lname', $query);
+   $this->db->or_like('fname', $query);
+  }
+  $this->db->order_by('id', 'ASC');
+  return $this->db->get();
+ }
+
+
+
+
 }
 ?>

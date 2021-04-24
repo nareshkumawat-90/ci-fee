@@ -97,7 +97,7 @@ class Students extends CI_Controller
 		$config['num_tag_open'] = '<li>';
 		$config['num_tag_close'] = '</li>';
 
-                $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$this->pagination->initialize($config);
 		$data['links'] = $this->pagination->create_links();
 		$data['students'] = $this->Student_model->get_students($config["per_page"], $page);
@@ -274,6 +274,60 @@ class Students extends CI_Controller
 			redirect("Students/editFee");
 		}
 	}
+
+
+	/*fetch data*/
+public	function view()
+ {
+  $this->load->view('fee');
+ }
+
+public function fetch()
+ {
+  $output = '';
+  $query = '';
+  $this->load->model('Student_model');
+  if($this->input->post('query'))
+  {
+   $query = $this->input->post('query');
+  }
+  $data = $this->Student_model->fetch_data($query);
+  $output .= '
+     <table class="table table-bordered table-striped">
+      <tr>
+      <th>Sr No</th>
+       <th>First Name</th>
+       <th>Last Name</th>
+       <th>Amount</th>
+       <th>Paid Date</th>
+       <th>Description</th>
+      </tr>
+  ';
+  if($data->num_rows() > 0)
+  {
+   foreach($data->result() as $row)
+   {
+    $output .= '
+      <tr>
+      <td>'.$row->id.'</td>
+      <td>'.$row->fname.'</td>
+      <td>'.$row->lname.'</td>
+       <td>'.$row->amount.'</td>
+       <td>'.$row->paid_date.'</td>
+       <td>'.$row->description.'</td>
+      </tr>
+    ';
+   }
+  }
+  else
+  {
+   $output .= '<tr>
+       <td colspan="5">No Data Found</td>
+      </tr>';
+  }
+  $output .= '</table>';
+  echo $output;
+ }
 
 
  }

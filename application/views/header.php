@@ -6,26 +6,29 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <title>Gentelella Alela! | </title>
 
     <!-- Bootstrap -->
-     
-     <link rel="stylesheet" href="<?php echo base_url('assest/vendors/bootstrap/dist/css/bootstrap.min.css'); ?>">
+    <link href="<?php echo base_url('assets/vendors/bootstrap/dist/css/bootstrap.min.css'); ?>" rel="stylesheet">
     <!-- Font Awesome -->
-    
-    <link rel="stylesheet" href="<?php echo base_url('assets/vendors/font-awesome/css/font-awesome.min.css'); ?>">
+    <link href="<?php echo base_url('assets/vendors/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet">
     <!-- NProgress -->
-    <link rel="stylesheet" href="<?php echo base_url('assest/vendors/nprogress/nprogress.css'); ?>">
+    <link href="<?php echo base_url('assets/vendors/nprogress/nprogress.css'); ?>" rel="stylesheet">
     <!-- iCheck -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/vendors/iCheck/skins/flat/green.css'); ?>">
-    <!-- bootstrap-progressbar -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/assest/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css'); ?>">
-    <!-- JQVMap -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/vendors/jqvmap/dist/jqvmap.min.css'); ?>">
+    <link href="<?php echo base_url('assets/vendors/iCheck/skins/flat/green.css'); ?>" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="<?php echo base_url('assets/vendors/google-code-prettify/bin/prettify.min.css'); ?>" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="<?php echo base_url('assets/vendors/select2/dist/css/select2.min.css'); ?>" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="<?php echo base_url('assets/vendors/switchery/dist/switchery.min.css'); ?>" rel="stylesheet">
+    <!-- starrr -->
+    <link href="<?php echo base_url('assets/vendors/starrr/dist/starrr.css'); ?>" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/vendors/bootstrap-daterangepicker/daterangepicker.css'); ?>">
+    <link href="<?php echo base_url('assets/vendors/bootstrap-daterangepicker/daterangepicker.css'); ?>" rel="stylesheet">
+
     <!-- Custom Theme Style -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.min.css'); ?>">
+    <link href="<?php echo base_url('assets/css/custom.min.css'); ?>" rel="stylesheet">
   </head>
   

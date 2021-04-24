@@ -1,5 +1,4 @@
- <?php include('header.php') ?>
-
+<?php include('header.php') ?>
 
   <body class="nav-md">
     <div class="container body">
@@ -28,7 +27,6 @@
 
             <!-- sidebar menu -->
             <?php include('sidebar.php') ?>
-            
             <!-- /sidebar menu -->
 
             <!-- /menu footer buttons -->
@@ -52,7 +50,6 @@
 
         <!-- top navigation -->
         <?php include('top.php') ?>
-        
         <!-- /top navigation -->
 
         <!-- page content -->
@@ -81,7 +78,7 @@
                   <div class="x_title">
                     <h2>Student Form </small></h2>
                     <ul class="nav navbar-right panel_toolbox">
-                      <li><a href= "http://localhost/fee/Students/displaydata" class="btn btn-primary"> Display records</a></li>
+                      <li><a href= "http://localhost/fee/Students/savedata" class="btn btn-primary"> Add records</a></li>
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
                       <li class="dropdown">
@@ -100,38 +97,24 @@
                   </div>
                   <div class="x_content">
                     <br />
-                    <?php echo form_open("Students/update_fee_record/{$data->id}",['class'=> 'form-horizontal']); ?>
-                      <div id="msg"></div>
-                      <div class="form-group">
-                        <label for="amountid" class="control-label col-md-3 col-sm-3 col-xs-12">Amount<span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="amountid" class="form-control col-md-7 col-xs-12" value="<?php echo $data->amount; ?>" required="required" name="amount" required="required" type="text">
-                        </div>
+                
+                  <div class="form-group">
+                    <div class="col-md-3 col-sm-3 col-xs-6 navbar-right">
+                      <div class="input-group float-right">
+                        <input type="text" name="search_text" id="search_text" class="form-control col-md-12 col-xs-12" value="" />
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
                       </div>
-                      <div class="form-group">
-                        <label for="paid_dateid" class="control-label col-md-3 col-sm-3 col-xs-12">Paid Date <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="paid_dateid" name="paid_date" value="<?php echo $data->paid_date; ?>" class="date-picker form-control col-md-7 col-xs-12" required="required" type="date">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="descriptionid" class="control-label col-md-3 col-sm-3 col-xs-12">Description<span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="descriptionid" class="form-control col-md-7 col-xs-12" value="<?php echo $data->description; ?>" required="required" name="description" type="text">
-                        </div>
-                      </div>
-                      <div class="ln_solid"></div>
-                      <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button class="btn btn-primary" type="button">Cancel</button>
-                          <input type="submit"  value="save" class="btn btn-success"/>
-                        </div>
-                      </div>
-                    <?php echo form_close(); ?>
                     </div>
+                  </div>
+   <br />
+   <div id="result" class="x_content">
+     
+   </div>
+
+  </div>
+
+  
+                  </div>
                 </div>
               </div>
             </div>
@@ -142,5 +125,35 @@
         <!-- /page content -->
 
         <!-- footer content -->
-       <?php include('footer.php') ?>
-        
+    <?php include('footer.php') ?>
+    <script>
+$(document).ready(function(){
+
+ load_data();
+
+ function load_data(query)
+ {
+  $.ajax({
+   url:"<?php echo base_url(); ?>Students/fetch",
+   method:"POST",
+   data:{query:query},
+   success:function(data){
+    $('#result').html(data);
+   }
+  })
+ }
+
+ $('#search_text').keyup(function(){
+  var search = $(this).val();
+  if(search != '')
+  {
+   load_data(search);
+  }
+  else
+  {
+   load_data();
+  }
+ });
+});
+</script>
+    
