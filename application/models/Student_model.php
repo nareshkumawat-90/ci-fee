@@ -97,27 +97,7 @@ class Student_model extends CI_Model
         }
 
 
-        // test for pagination
-        private function _get_fees_data()
-        { 
-                $this->db->select(['fees.id','students.fname','students.lname','fees.amount','fees.paid_date','fees.description']);
-                $this->db->from("fees");
-                $this->db->join("students",'fees.student_id = students.id');
-                $this->db->order_by('fees.id',' asc');
-        }
-        public function get_fees($limit, $start)
-        { 
-                $this->_get_fees_data(); 
-                $this->db->limit($limit, $start); 
-                $query = $this->db->get(); 
-                return $query->result_array(); 
-        }
-        public function count_all_fees()
-        { 
-                $this->_get_fees_data(); 
-                $query = $this->db->count_all_results(); 
-                return $query; 
-        }
+       
 
         /*update student data*/
         public function getStudentRecord($id)
@@ -149,28 +129,105 @@ class Student_model extends CI_Model
                                 ->update('fees',$data);
         }
 
+        //  // test for pagination
+        //  private function _get_fees_data()
+        //  { 
+        //          $this->db->select(['fees.id','students.fname','students.lname','fees.amount','fees.paid_date','fees.description']);
+        //          $this->db->from("fees");
+        //          $this->db->join("students",'fees.student_id = students.id');
+        //          $this->db->order_by('fees.id',' asc');
+        //  }
+        //  public function get_fees($limit, $start)
+        //  { 
+        //          $this->_get_fees_data(); 
+        //          $this->db->limit($limit, $start); 
+        //          $query = $this->db->get(); 
+        //          return $query->result_array(); 
+        //  }
+        //  public function count_all_fees()
+        //  { 
+        //          $this->_get_fees_data(); 
+        //          $query = $this->db->count_all_results(); 
+        //          return $query; 
+        //  }
+        
+         /*fetch data*/
+        //  public function fetch_data($query)
+        //  {
+        //          $this->db->select(['fees.id','students.fname','students.lname','fees.amount','fees.paid_date','fees.description']);
+        //          $this->db->from("fees");
+        //          $this->db->join("students",'fees.student_id = students.id');
+        //          if($query != '')
+        //          {
+        //                  $this->db->like('amount', $query);
+        //                  $this->db->or_like('paid_date', $query);
+        //                  $this->db->or_like('description', $query);
+        //                  $this->db->or_like('lname', $query);
+        //                  $this->db->or_like('fname', $query);
+        //         }
+        //         $this->db->order_by('id', 'ASC');
+        //         return $this->db->get();
+        // }
 
-/*fetch data*/
-public function fetch_data($query)
- {
-            $this->db->select(['fees.id','students.fname','students.lname','fees.amount','fees.paid_date','fees.description']);
-            $this->db->from("fees");
-            $this->db->join("students",'fees.student_id = students.id');
-                
-  if($query != '')
-  {
-   $this->db->like('amount', $query);
-   $this->db->or_like('paid_date', $query);
-   $this->db->or_like('description', $query);
-   $this->db->or_like('lname', $query);
-   $this->db->or_like('fname', $query);
-  }
-  $this->db->order_by('id', 'ASC');
-  return $this->db->get();
- }
-
-
-
+/* pagination with search */
+        function getRows($params = array()){ 
+                $this->db->select(['fees.id','students.fname','students.lname','fees.amount','fees.paid_date','fees.description']);
+                        $this->db->from("fees");
+                        $this->db->join("students",'fees.student_id = students.id');
+                 
+                if(array_key_exists("where", $params)){ 
+                    foreach($params['where'] as $key => $val){ 
+                        $this->db->where($key, $val); 
+                    } 
+                } 
+                 
+                if(array_key_exists("search", $params)){ 
+                    // Filter data by searched keywords 
+                    if(!empty($params['search']['keywords'])){ 
+                        $this->db->like('amount', $params['search']['keywords']);
+                        $this->db->or_like('paid_date', $params['search']['keywords']);
+                        $this->db->or_like('description', $params['search']['keywords']);
+                        $this->db->or_like('fname', $params['search']['keywords']);
+                        $this->db->or_like('lname', $params['search']['keywords']);
+        
+        
+        
+                    } 
+                } 
+                 
+                // Sort data by ascending or desceding order 
+                if(!empty($params['search']['sortBy'])){ 
+                        $this->db->order_by('fname', $params['search']['sortBy']); 
+        
+                }else{ 
+                    $this->db->order_by('id', 'desc'); 
+                } 
+                 
+                if(array_key_exists("returnType",$params) && $params['returnType'] == 'count'){ 
+                    $result = $this->db->count_all_results(); 
+                }else{ 
+                    if(array_key_exists("id", $params) || (array_key_exists("returnType", $params) && $params['returnType'] == 'single')){ 
+                        if(!empty($params['id'])){ 
+                            $this->db->where('id', $params['id']); 
+                        } 
+                        $query = $this->db->get(); 
+                        $result = $query->row_array(); 
+                    }else{ 
+                        $this->db->order_by('id', 'desc'); 
+                        if(array_key_exists("start",$params) && array_key_exists("limit",$params)){ 
+                            $this->db->limit($params['limit'],$params['start']); 
+                        }elseif(!array_key_exists("start",$params) && array_key_exists("limit",$params)){ 
+                            $this->db->limit($params['limit']); 
+                        } 
+                         
+                        $query = $this->db->get(); 
+                        $result = ($query->num_rows() > 0)?$query->result_array():FALSE; 
+                    } 
+                } 
+                 
+                // Return fetched data 
+                return $result; 
+            } 
 
 }
 ?>
