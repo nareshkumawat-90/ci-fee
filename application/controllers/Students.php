@@ -74,38 +74,38 @@ class Students extends CI_Controller
 	// 	$result['data']=$this->Student_model->display_records();
 	// 	$this->load->view('show',$result);
 	// }
-	public function displaydata(){
+	// public function displaydata(){
 
-		$config['base_url'] = base_url().'Students/displaydata';        
-		$config['total_rows'] = $this->Student_model->count_all_students();
-		$config['per_page'] = 1;
-		$config['uri_segment'] = 3;
-		$config['full_tag_open'] = '<ul class="pagination">';
-		$config['full_tag_close'] = '</ul>';
-		$config['first_link'] = 'First';
-		$config['last_link'] = 'Last';
-		$config['first_tag_open'] = '<li>';
-		$config['first_tag_close'] = '</li>';
-		$config['prev_link'] = '&laquo';
-		$config['prev_tag_open'] = '<li class="prev">';
-		$config['prev_tag_close'] = '</li>';
-		$config['next_link'] = '&raquo';
-		$config['next_tag_open'] = '<li>';
-		$config['next_tag_close'] = '</li>';
-		$config['last_tag_open'] = '<li>';
-		$config['last_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="#">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li>';
-		$config['num_tag_close'] = '</li>';
+	// 	$config['base_url'] = base_url().'Students/displaydata';        
+	// 	$config['total_rows'] = $this->Student_model->count_all_students();
+	// 	$config['per_page'] = 1;
+	// 	$config['uri_segment'] = 3;
+	// 	$config['full_tag_open'] = '<ul class="pagination">';
+	// 	$config['full_tag_close'] = '</ul>';
+	// 	$config['first_link'] = 'First';
+	// 	$config['last_link'] = 'Last';
+	// 	$config['first_tag_open'] = '<li>';
+	// 	$config['first_tag_close'] = '</li>';
+	// 	$config['prev_link'] = '&laquo';
+	// 	$config['prev_tag_open'] = '<li class="prev">';
+	// 	$config['prev_tag_close'] = '</li>';
+	// 	$config['next_link'] = '&raquo';
+	// 	$config['next_tag_open'] = '<li>';
+	// 	$config['next_tag_close'] = '</li>';
+	// 	$config['last_tag_open'] = '<li>';
+	// 	$config['last_tag_close'] = '</li>';
+	// 	$config['cur_tag_open'] = '<li class="active"><a href="#">';
+	// 	$config['cur_tag_close'] = '</a></li>';
+	// 	$config['num_tag_open'] = '<li>';
+	// 	$config['num_tag_close'] = '</li>';
 
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		$this->pagination->initialize($config);
-		$data['links'] = $this->pagination->create_links();
-		$data['students'] = $this->Student_model->get_students($config["per_page"], $page);
-		$this->load->view('show',$data);    
+    //     $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+	// 	$this->pagination->initialize($config);
+	// 	$data['links'] = $this->pagination->create_links();
+	// 	$data['students'] = $this->Student_model->get_students($config["per_page"], $page);
+	// 	$this->load->view('show',$data);    
 
-	}
+	// }
 
 	/*delete student data*/
 	public function delStudent($id)
@@ -338,6 +338,76 @@ public function index(){
 	 
 	// Get record count 
 	$conditions['returnType'] = 'count'; 
+	$totalRec = $this->Student_model->getRowf($conditions); 
+	 
+	// Pagination configuration 
+	$config['target']      = '#dataList'; 
+	$config['base_url']    = base_url('Students/ajaxPaginationFee'); 
+	$config['total_rows']  = $totalRec; 
+	$config['per_page']    = $this->perPage; 
+	$config['link_func']   = 'searchFilter'; 
+	 
+	// Initialize pagination library 
+	$this->ajax_pagination->initialize($config); 
+	 
+	// Get records 
+	$conditions = array( 
+		'limit' => $this->perPage 
+	); 
+	$data['fees'] = $this->Student_model->getRowf($conditions); 
+	 
+	// Load the list page view 
+	$this->load->view('fee', $data); 
+} 
+ 
+function ajaxPaginationFee(){ 
+	// Define offset 
+	$page = $this->input->post('page'); 
+	if(!$page){ 
+		$offset = 0; 
+	}else{ 
+		$offset = $page; 
+	} 
+	 
+	// Set conditions for search and filter 
+	$keywords = $this->input->post('keywords'); 
+	$sortBy = $this->input->post('sortBy'); 
+	if(!empty($keywords)){ 
+		$conditions['search']['keywords'] = $keywords; 
+	} 
+	if(!empty($sortBy)){ 
+		$conditions['search']['sortBy'] = $sortBy; 
+	} 
+	 
+	// Get record count 
+	$conditions['returnType'] = 'count'; 
+	$totalRec = $this->Student_model->getRowf($conditions); 
+	 
+	// Pagination configuration 
+	$config['target']      = '#dataList'; 
+	$config['base_url']    = base_url('Students/ajaxPaginationFee'); 
+	$config['total_rows']  = $totalRec; 
+	$config['per_page']    = $this->perPage; 
+	$config['link_func']   = 'searchFilter'; 
+	 
+	// Initialize pagination library 
+	$this->ajax_pagination->initialize($config); 
+	 
+	// Get records 
+	$conditions['start'] = $offset; 
+	$conditions['limit'] = $this->perPage; 
+	unset($conditions['returnType']); 
+	$data['fees'] = $this->Student_model->getRowf($conditions); 
+	 
+	// Load the data list view 
+	$this->load->view('ajax-fee', $data, false); 
+}
+/* Display student */ 
+public function displaydata(){ 
+	$data = array(); 
+	 
+	// Get record count 
+	$conditions['returnType'] = 'count'; 
 	$totalRec = $this->Student_model->getRows($conditions); 
 	 
 	// Pagination configuration 
@@ -354,10 +424,10 @@ public function index(){
 	$conditions = array( 
 		'limit' => $this->perPage 
 	); 
-	$data['fees'] = $this->Student_model->getRows($conditions); 
+	$data['student'] = $this->Student_model->getRows($conditions); 
 	 
 	// Load the list page view 
-	$this->load->view('test3', $data); 
+	$this->load->view('show', $data); 
 } 
  
 function ajaxPaginationData(){ 
@@ -397,10 +467,10 @@ function ajaxPaginationData(){
 	$conditions['start'] = $offset; 
 	$conditions['limit'] = $this->perPage; 
 	unset($conditions['returnType']); 
-	$data['fees'] = $this->Student_model->getRows($conditions); 
+	$data['student'] = $this->Student_model->getRows($conditions); 
 	 
 	// Load the data list view 
-	$this->load->view('ajax-data2', $data, false); 
+	$this->load->view('ajax-data', $data, false); 
 } 
 
  }
