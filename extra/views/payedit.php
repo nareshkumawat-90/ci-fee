@@ -1,4 +1,4 @@
- <?php include('template/header.php') ?>
+ <?php include('header.php') ?>
 
  <body class="nav-md">
      <div class="container body">
@@ -26,7 +26,7 @@
                      <br />
 
                      <!-- sidebar menu -->
-                     <?php include('template/sidebar.php') ?>
+                     <?php include('sidebar.php') ?>
 
                      <!-- /sidebar menu -->
 
@@ -50,7 +50,7 @@
              </div>
 
              <!-- top navigation -->
-             <?php include('template/top.php') ?>
+             <?php include('top.php') ?>
 
              <!-- /top navigation -->
 
@@ -141,4 +141,4 @@
              <!-- /page content -->
 
              <!-- footer content -->
-             <?php include('template/footer.php') ?>
+             <?php include('footer.php') ?>

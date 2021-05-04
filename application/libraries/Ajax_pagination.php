@@ -197,23 +197,25 @@ class Ajax_pagination{
         // Add the wrapper HTML if exists
         $output = $this->full_tag_open.$output.$this->full_tag_close;
         ?>
-        <script>
-        function getData(page){  
-            $.ajax({
-                method: "POST",
-                url: "<?php echo $this->base_url; ?>"+page,
-                data: { page: page },
-                beforeSend: function(){
-                    $('<?php echo $this->loading; ?>').show();
-                },
-                success: function(data){
-                    $('<?php echo $this->loading; ?>').hide();
-                    $('<?php echo $this->target; ?>').html(data);
-                }
-            });
-        }
-        </script>
-        <?php
+<script>
+    function getData(page) {
+        $.ajax({
+            method: "POST",
+            url: "<?php echo $this->base_url; ?>" + page,
+            data: {
+                page: page
+            },
+            beforeSend: function() {
+                $('<?php echo $this->loading; ?>').show();
+            },
+            success: function(data) {
+                $('<?php echo $this->loading; ?>').hide();
+                $('<?php echo $this->target; ?>').html(data);
+            }
+        });
+    }
+</script>
+<?php
         return $output;
     }
 

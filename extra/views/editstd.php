@@ -1,4 +1,4 @@
-<?php include('template/header.php') ?>
+<?php include('header.php') ?>
 
 <body class="nav-md">
     <div class="container body">
@@ -26,7 +26,7 @@
                     <br />
 
                     <!-- sidebar menu -->
-                    <?php include('template/sidebar.php') ?>
+                    <?php include('sidebar.php') ?>
 
                     <!-- /sidebar menu -->
 
@@ -50,7 +50,7 @@
             </div>
 
             <!-- top navigation -->
-            <?php include('template/top.php') ?>
+            <?php include('top.php') ?>
 
             <!-- /top navigation -->
 
@@ -111,11 +111,11 @@
 
 
                                             <?php
-                                            if(form_error('fname'))
-                                            {
-                                                echo "<span style='color:red'>".form_error('fname')."</span>";
-                                            }
-                                            ?>
+                            if(form_error('fname'))
+                            {
+                              echo "<span style='color:red'>".form_error('fname')."</span>";
+                            }
+                            ?>
 
                                         </div>
                                     </div>
@@ -127,11 +127,11 @@
 
                                             <input type="text" id="last-name" name="lname" class="form-control col-md-7 col-xs-12" value="<?php echo $data->lname; ?>">
                                             <?php
-                                            if(form_error('lname'))
-                                            {
-                                                echo "<span style='color:red'>".form_error('lname')."</span>";
-                                            }
-                                            ?>
+                          if(form_error('lname'))
+                          {
+                            echo "<span style='color:red'>".form_error('lname')."</span>";
+                          }
+                          ?>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -140,11 +140,11 @@
                                             <input id="email" class="form-control col-md-7 col-xs-12" type="email" name="email" value="<?php echo $data->email; ?>">
 
                                             <?php
-                                            if(form_error('email'))
-                                            {
-                                                echo "<span style='color:red'>".form_error('email')."</span>";
-                                            }
-                                            ?>
+                          if(form_error('email'))
+                          {
+                            echo "<span style='color:red'>".form_error('email')."</span>";
+                          }
+                          ?>
                                         </div>
 
 
@@ -226,4 +226,4 @@
             <!-- /page content -->
 
             <!-- footer content -->
-            <?php include('template/footer.php') ?>
+            <?php include('footer.php') ?>

@@ -1,4 +1,4 @@
-<?php include('template/header.php') ?>
+<?php include('header.php') ?>
 <style>
     .row {
         position: relative;
@@ -135,7 +135,7 @@
         var sortBy = $('#sortBy').val();
         $.ajax({
             type: 'POST',
-            url: '<?php echo base_url('Students/ajaxPaginationFee/'); ?>' + page_num,
+            url: '<?php echo base_url('Students/ajaxPaginationData/'); ?>' + page_num,
             data: 'page=' + page_num + '&keywords=' + keywords + '&sortBy=' + sortBy,
             beforeSend: function() {
                 $('.loading').show();
@@ -173,7 +173,7 @@
                     <br />
 
                     <!-- sidebar menu -->
-                    <?php include('template/sidebar.php') ?>
+                    <?php include('sidebar.php') ?>
                     <!-- /sidebar menu -->
 
                     <!-- /menu footer buttons -->
@@ -196,7 +196,7 @@
             </div>
 
             <!-- top navigation -->
-            <?php include('template/top.php') ?>
+            <?php include('top.php') ?>
             <!-- /top navigation -->
 
             <!-- page content -->
@@ -204,7 +204,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Fee Details</h3>
+                            <h3>Student Form</h3>
                         </div>
 
                         <div class="title_right">
@@ -224,8 +224,9 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Fee Details </small></h2>
+                                    <h2>Student Form </small></h2>
                                     <ul class="nav navbar-right panel_toolbox">
+                                        <li><a href="<?php echo base_url(); ?>Students/savedata" class="btn btn-primary"> Add records</a></li>
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                                         <li class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
@@ -240,7 +241,6 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-
                                     <div class="form-group">
                                         <div class="col-md-3 col-sm-3 col-xs-6 navbar-right">
                                             <div class="input-group float-right">
@@ -261,21 +261,46 @@
                                                 <th>Sr No</th>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
+                                                <th>Contact </th>
+                                                <th>Email</th>
+                                                <th>Gender</th>
+                                                <th>Date of Birth</th>
+                                                <th>Subject </th>
+                                                <th>Class </th>
+                                                <th>Total fees</th>
                                                 <th>Amount </th>
-                                                <th>Paid Date</th>
-                                                <th>Descriptionr</th>
-                                                <th></th>
+                                                <th>Due Amount </th>
+                                                <th>Address</th>
+                                                <th>Status</th>
+                                                <th>Action </th>
                                             </tr>
-                                            <?php if(!empty($fees)){ foreach($fees as $row){ ?>
+                                            <?php if(!empty($student)){ foreach($student as $row){ ?>
                                             <tr>
-                                                <td><?php echo $row["id"] ;?></td>
-                                                <td><?php echo $row["fname"] ;?></td>
-                                                <td><?php echo $row["lname"] ;?></td>
-                                                <td><?php echo $row["amount"] ;?></td>
-                                                <td><?php echo $row["paid_date"] ;?></td>
-                                                <td><?php echo $row["description"] ;?></td>
-                                                <td><?php echo anchor("Students/delFee/{$row['id']}","Delete",['class'=>'btn btn-danger','onclick'=>'return ConfirmDialog();']); ?>
-                                                    <?php echo anchor("Students/editFee/{$row['id']}","Update",['class'=>'btn btn-success']); ?>
+                                                <td><?php echo $row['id'] ;?></td>
+                                                <td><?php echo $row['fname'] ;?></td>
+                                                <td><?php echo $row['lname'] ;?></td>
+                                                <td><?php echo $row['contactno'] ;?></td>
+                                                <td><?php echo $row['email'] ;?></td>
+                                                <td><?php echo $row['gender'] ;?></td>
+                                                <td><?php echo $row['dob'] ;?></td>
+                                                <td><?php echo $row['class'] ;?></td>
+                                                <td><?php echo $row['subject'] ;?></td>
+                                                <td><?php echo $row['total_fee'] ;?></td>
+                                                <td><?php echo $row['amount'] ;?></td>
+                                                <td><?php echo $row['total_fee']-$row['amount'] ;?></td>
+                                                <td><?php echo $row['address'] ;?></td>
+                                                <td><?php echo $row['status'] ;?></td>
+                                                <td><?php echo anchor("Students/delStudent/{$row['id']}","Delete",['class'=>'btn btn-danger','onclick'=>'return ConfirmDialog();']); ?>
+                                                    <?php echo anchor("Students/paydata/{$row['id']}","Pay",['class'=>'btn btn-success']); ?>
+                                                    <?php echo anchor("Students/editStudent/{$row['id']}","Update",['class'=>'btn btn-success']); ?>
+                                                    <?php if($row['status'] == 'active'){ ?>
+        
+        <?php echo anchor("Students/update_status/{$row['id']}/{$row['status']}","Active",['class'=>'btn btn-success']); ?>
+
+<?php }else{ ?>
+  <?php echo anchor("Students/update_status/{$row['id']}/{$row['status']}","Passout",['class'=>'btn btn-danger']); ?>
+<?php } ?>
+                                                    
                                                 </td>
                                             </tr>
                                             <?php
@@ -283,10 +308,12 @@
                                                 } }else{
                                              ?>
                                             <tr>
-                                                <td>Data not found...</td>
+                                                <td colspan="15" align="center">Data not found...</td>
                                             </tr>
                                             <?php } ?>
                                         </table>
+                                        <!-- Render pagination links -->
+                                        
                                         <?php echo $this->ajax_pagination->create_links(); ?>
                                     </div>
                                 </div>
@@ -298,7 +325,7 @@
             <!-- /page content -->
 
             <!-- footer content -->
-            <?php include('template/footer.php') ?>
+            <?php include('footer.php') ?>
             <script type="text/javascript">
                 function ConfirmDialog() {
                     var x = confirm("Are you sure to delete record?")
@@ -309,3 +336,25 @@
                     }
                 }
             </script>
+            <script>
+  $(document).ready(function(){
+   $('.changeStatus').on('change', function(){
+      console.log("select click");
+      console.log('std_id');
+      console.log('status');
+      let std_id = $(this).data('id');
+      let status= $(this).val();
+
+      $.ajax({
+       url: "3.php",
+       type: "POST",
+       data:{id:std_id,status:status}
+       ,success: function (data) {
+          /*$("#id").val(data.id);
+          $("#status").val(data.Status);*/
+        }
+      });
+    }); 
+ });
+
+</script>

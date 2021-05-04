@@ -17,12 +17,6 @@ class Students extends CI_Controller {
 		$this->perPage = 4; 
 
 	}
-
-    /*
-	*-------------------------------------------
-	* Display Dashboard
-	*-------------------------------------------
-	*/
     public function index()
 	{
         $totalStudent=$this->Student_model->countTotalStudent();
@@ -32,12 +26,7 @@ class Students extends CI_Controller {
         $this->load->view('dashboard',['totalStudent'=>$totalStudent,'totalActive'=>$totalActive,'totalPassout'=>$totalPassout,'totalHold'=>$totalHold]);
     }
 
-    
-    /*
-	*-------------------------------------------
-	* Insert student data
-	*-------------------------------------------
-	*/
+	/*Insert student data*/
 	public function savedata()
 	{
 
@@ -85,11 +74,47 @@ class Students extends CI_Controller {
 		}$this->load->view('student_form');
 	}
 
-    /*
-	*-------------------------------------------
-	* delete student data
-	*-------------------------------------------
-	*/
+
+	/*display student data*/ 
+	// public function displaydata()
+	// {
+	// 	$result['data']=$this->Student_model->display_records();
+	// 	$this->load->view('show',$result);
+	// }
+	// public function displaydata(){
+
+	// 	$config['base_url'] = base_url().'Students/displaydata';        
+	// 	$config['total_rows'] = $this->Student_model->count_all_students();
+	// 	$config['per_page'] = 1;
+	// 	$config['uri_segment'] = 3;
+	// 	$config['full_tag_open'] = '<ul class = "pagination">';
+	// 	$config['full_tag_close'] = '</ul>';
+	// 	$config['first_link'] = 'First';
+	// 	$config['last_link'] = 'Last';
+	// 	$config['first_tag_open'] = '<li>';
+	// 	$config['first_tag_close'] = '</li>';
+	// 	$config['prev_link'] = '&laquo';
+	// 	$config['prev_tag_open'] = '<li class = "prev">';
+	// 	$config['prev_tag_close'] = '</li>';
+	// 	$config['next_link'] = '&raquo';
+	// 	$config['next_tag_open'] = '<li>';
+	// 	$config['next_tag_close'] = '</li>';
+	// 	$config['last_tag_open'] = '<li>';
+	// 	$config['last_tag_close'] = '</li>';
+	// 	$config['cur_tag_open'] = '<li class = "active"><a href = "#">';
+	// 	$config['cur_tag_close'] = '</a></li>';
+	// 	$config['num_tag_open'] = '<li>';
+	// 	$config['num_tag_close'] = '</li>';
+
+    //     $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+	// 	$this->pagination->initialize($config);
+	// 	$data['links'] = $this->pagination->create_links();
+	// 	$data['students'] = $this->Student_model->get_students($config["per_page"], $page);
+	// 	$this->load->view('show',$data);    
+
+	// }
+
+	/*delete student data*/
 	public function delStudent($id)
 	{
 
@@ -99,11 +124,9 @@ class Students extends CI_Controller {
 		}
 	}
 
-	/*
-	*-------------------------------------------
-	* insert fee data
-	*-------------------------------------------
-	*/
+	
+
+	/*insert fee data*/
 	public function paydata($id)
 	{
                
@@ -130,11 +153,23 @@ class Students extends CI_Controller {
 		}$this->load->view('pay');
 	}
 
-	/*
-	*-------------------------------------------
-	* delete fee data
-	*-------------------------------------------
-	*/
+       /*Display fee data*/
+       // 	public function displaypay(){
+       // // $result['data']=$this->Student_model->pay_records();
+       // // $this->load->view('fee',$result);
+       // 		$config=[
+       // 			'base_url'=>base_url('students/displaypay'),
+       // 			'per_page'=>1,
+       // 			'total_rows'=>$this->Student_model->get_counts(),
+       // 		];
+       // 		$this->pagination->initialize($config);
+       // 		$data = $this->Student_model->pay_records($config['per_page'],$this->uri->segment(3));
+       // 		$this->load->view('fee',['data'=>$data]);
+       // 	}
+
+
+
+	/*delete fee data*/
 	public function delFee($id)
 	{
 
@@ -144,11 +179,9 @@ class Students extends CI_Controller {
 		}
 	}
 
-	/*
-	*-------------------------------------------
-	* update student data
-	*-------------------------------------------
-	*/
+	
+
+	/*update student data*/
 	public function editStudent($id)
 	{
 		$data = $this->Student_model->getStudentRecord($id);
@@ -183,11 +216,21 @@ class Students extends CI_Controller {
 	
 	}
 
-	/*
-	*-------------------------------------------
-	* update fees data
-	*-------------------------------------------
-	*/
+	// public function update_record($id)
+	// { 
+	      
+	// 	$data = $this->input->post();
+	// 	if($this->Student_model->updateStudent($data , $id))
+	// 	{
+	// 		redirect("Students/displaydata");
+	// 	} 
+	// 	else
+	// 	{
+	// 		redirect("Students/editStudent/{$id}");
+	// 	}
+	// }
+
+	/*update student data*/
 	public function editFee($id)
 	{
 
@@ -206,12 +249,94 @@ class Students extends CI_Controller {
 			redirect("Students/editFee");
 		}
 	}
-    
-    /*
-	*-------------------------------------------
-	* Display fees data
-	*-------------------------------------------
-	*/
+    // /*fetch data*/
+    // public function view()
+    // {
+    // $this->load->view('fee');
+    // }
+
+    // public function fetch()
+    // {
+    // $output = '';
+    // $query = '';
+    // $this->load->model('Student_model');
+    // if($this->input->post('query'))
+    // {
+    // $query = $this->input->post('query');
+    // }
+    // $data = $this->Student_model->fetch_data($query);
+    // $output .= '
+        // <table class = "table table-bordered table-striped">
+        // <tr>
+        // <th>Sr No</th>
+        // <th>First Name</th>
+        // <th>Last Name</th>
+        // <th>Amount</th>
+        // <th>Paid Date</th>
+        // <th>Description</th>
+        // </tr>
+        // ';
+        // if($data->num_rows() > 0)
+        // {
+        // foreach($data->result() as $row)
+        // {
+        // $output .= '
+        // <tr>
+        // <td>'.$row->id.'</td>
+        // <td>'.$row->fname.'</td>
+        // <td>'.$row->lname.'</td>
+        // <td>'.$row->amount.'</td>
+        // <td>'.$row->paid_date.'</td>
+        // <td>'.$row->description.'</td>
+        // </tr>
+        // ';
+        // }
+        // }
+        // else
+        // {
+        // $output .= '<tr>
+        // <td colspan = "5">No Data Found</td>
+        // </tr>';
+        // }
+        // $output .= '</table>';
+    // echo $output;
+    // }
+    // /*test for pagination */
+    // public function index(){
+
+    // $config['base_url'] = base_url().'Students/index';
+    // $config['total_rows'] = $this->Student_model->count_all_fees();
+    // $config['per_page'] = 1;
+    // $config['uri_segment'] = 3;
+    // $config['full_tag_open'] = '<ul class = "pagination">';
+        // $config['full_tag_close'] = '</ul>';
+    // $config['first_link'] = 'First';
+    // $config['last_link'] = 'Last';
+    // $config['first_tag_open'] = '<li>';
+        // $config['first_tag_close'] = '</li>';
+    // $config['prev_link'] = '&laquo';
+    // $config['prev_tag_open'] = '<li class = "prev">';
+        // $config['prev_tag_close'] = '</li>';
+    // $config['next_link'] = '&raquo';
+    // $config['next_tag_open'] = '<li>';
+        // $config['next_tag_close'] = '</li>';
+    // $config['last_tag_open'] = '<li>';
+        // $config['last_tag_close'] = '</li>';
+    // $config['cur_tag_open'] = '<li class = "active"><a href = "#">';
+            // $config['cur_tag_close'] = '</a></li>';
+    // $config['num_tag_open'] = '<li>';
+        // $config['num_tag_close'] = '</li>';
+
+
+
+    // $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+    // $this->pagination->initialize($config);
+    // $data['links'] = $this->pagination->create_links();
+    // $data['fees'] = $this->Student_model->get_fees($config["per_page"], $page);
+    // $this->load->view('fee',$data);
+
+    // }
+    /* pagation with search */
     public function displayfee(){
     $data = array();
 
@@ -280,12 +405,7 @@ class Students extends CI_Controller {
     // Load the data list view
     $this->load->view('ajax-fee', $data, false);
     }
-
-    /*
-	*-------------------------------------------
-	* Display student data
-	*-------------------------------------------
-	*/
+    /* Display student */
     public function displaydata(){
     $data = array();
 

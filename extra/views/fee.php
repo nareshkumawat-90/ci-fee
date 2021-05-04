@@ -1,4 +1,4 @@
-<?php include('template/header.php') ?>
+<?php include('header.php') ?>
 <style>
     .row {
         position: relative;
@@ -173,7 +173,7 @@
                     <br />
 
                     <!-- sidebar menu -->
-                    <?php include('template/sidebar.php') ?>
+                    <?php include('sidebar.php') ?>
                     <!-- /sidebar menu -->
 
                     <!-- /menu footer buttons -->
@@ -196,7 +196,7 @@
             </div>
 
             <!-- top navigation -->
-            <?php include('template/top.php') ?>
+            <?php include('top.php') ?>
             <!-- /top navigation -->
 
             <!-- page content -->
@@ -298,7 +298,7 @@
             <!-- /page content -->
 
             <!-- footer content -->
-            <?php include('template/footer.php') ?>
+            <?php include('footer.php') ?>
             <script type="text/javascript">
                 function ConfirmDialog() {
                     var x = confirm("Are you sure to delete record?")

@@ -2,11 +2,8 @@
 
 class Student_model extends CI_Model  {
 
-    /*
-    *-------------------------------------------
-    * Insert student data
-    *-------------------------------------------
-    */
+    /*Insert student data*/
+
     function saverecords( $data ) {
         $a = $this->db->insert( 'students', $data );
         if ( $a ) {
@@ -16,20 +13,58 @@ class Student_model extends CI_Model  {
         }
     }
 
-    /*
-    *-------------------------------------------
-    *delete student data
-    *-------------------------------------------
-    */
+    /*display student data*/
+    // function display_records()
+    // {
+    //         $this->db->select( ['students.id', 'students.fname', 'students.lname', 'students.email', 'students.dob', 'students.gender', 'students.contactno', 'students.class', 'students.subject', 'students.total_fee', 'fees.amount', 'students.address'] );
+    //         $this->db->from( 'students' );
+    //         $this->db->join( 'fees', 'fees.student_id = students.id', 'left' );
+    //         $query = $this->db->get();
+    //         return $query->result();
+    // // $query = $this->db->get( "students" );
+    // // return $query->result();
+    // }
+
+    // private function _get_students_data()
+    // {
+
+    //         $this->db->select( ['students.id', 'students.fname', 'students.lname', 'students.email', 'students.dob', 'students.gender', 'students.contactno', 'students.class', 'students.subject', 'students.total_fee', 'fees.amount', 'students.address'] );
+    //         $this->db->from( 'students' );
+    //         $this->db->join( 'fees', 'students.id = fees.student_id ', 'left' );
+    //         $this->db->order_by( 'students.id', ' asc' );
+    // }
+
+    // public function get_students( $limit, $start )
+    // {
+
+    //         $this->_get_students_data();
+
+    //         $this->db->limit( $limit, $start );
+
+    //         $query = $this->db->get();
+
+    //         return $query->result_array();
+
+    // }
+    // public function count_all_students()
+    // {
+
+    //         $this->_get_students_data();
+
+    //         $query = $this->db->count_all_results();
+
+    //         return $query;
+
+    // }
+
+    /*delete student data*/
+
     public function removeStudent( $id ) {
         return $this->db->delete( 'students', ['id'=>$id] );
     }
 
-    /*
-    *-------------------------------------------
-    * Insert fees data
-    *-------------------------------------------
-    */
+    /*Insert fees data*/
+
     function payrecords( $data ) {
         $a = $this->db->insert( 'fees', $data );
         if ( $a ) {
@@ -39,21 +74,33 @@ class Student_model extends CI_Model  {
         }
     }
 
+    // public function get_counts()
+    // {
+    //         $q = $this->db->select()
+    //                       ->from( 'fees' )
+    //                       ->get();
+    //         return $q->num_rows();
+    // }
 
-    /*
-    *-------------------------------------------
-    * delete fees data
-    *-------------------------------------------
-    */
+    // public function pay_records( $limit, $offset )
+    // {
+    //         $this->db->select( ['fees.id', 'students.fname', 'students.lname', 'fees.amount', 'fees.paid_date', 'fees.description'] );
+    //         $this->db->from( "fees" );
+    //         $this->db->join( "students", 'fees.student_id = students.id' );
+    //         $this->db->order_by( 'fees.id', ' asc' );
+    //         $this->db->limit( $limit, $offset );
+    //         $q = $this->db->get();
+    //         return $q->result();
+    // }
+
+    /*delete fees data*/
+
     public function removefee( $id ) {
         return $this->db->delete( 'fees', ['id'=>$id] );
     }
 
-    /*
-    *-------------------------------------------
-    *update student data
-    *-------------------------------------------
-    */
+    /*update student data*/
+
     public function getStudentRecord( $id ) {
         $this->db->select( '*' );
         $this->db->from( 'students' );
@@ -67,12 +114,8 @@ class Student_model extends CI_Model  {
         ->update( 'students', $data );
     }
 
+    /*update fee data*/
 
-    /*
-	*-------------------------------------------
-	* update fee data
-	*-------------------------------------------
-	*/
     public function getFeeRecord( $id ) {
         $this->db->select( '*' );
         $this->db->from( 'fees' );
@@ -86,11 +129,58 @@ class Student_model extends CI_Model  {
         ->update( 'fees', $data );
     }
 
-    /*
-	*-------------------------------------------
-	* Display Fee Data
-	*-------------------------------------------
-	*/
+    //  // test for pagination
+    //  private function _get_fees_data()
+    // {
+
+    //          $this->db->select( ['fees.id', 'students.fname', 'students.lname', 'fees.amount', 'fees.paid_date', 'fees.description'] );
+    //          $this->db->from( "fees" );
+    //          $this->db->join( "students", 'fees.student_id = students.id' );
+    //          $this->db->order_by( 'fees.id', ' asc' );
+    //  }
+    //  public function get_fees( $limit, $start )
+    // {
+
+    //          $this->_get_fees_data();
+
+    //          $this->db->limit( $limit, $start );
+
+    //          $query = $this->db->get();
+
+    //          return $query->result_array();
+
+    //  }
+    //  public function count_all_fees()
+    // {
+
+    //          $this->_get_fees_data();
+
+    //          $query = $this->db->count_all_results();
+
+    //          return $query;
+
+    //  }
+
+    /*fetch data*/
+    //  public function fetch_data( $query )
+    // {
+    //          $this->db->select( ['fees.id', 'students.fname', 'students.lname', 'fees.amount', 'fees.paid_date', 'fees.description'] );
+    //          $this->db->from( "fees" );
+    //          $this->db->join( "students", 'fees.student_id = students.id' );
+    //          if ( $query != '' )
+    // {
+    //                  $this->db->like( 'amount', $query );
+    //                  $this->db->or_like( 'paid_date', $query );
+    //                  $this->db->or_like( 'description', $query );
+    //                  $this->db->or_like( 'lname', $query );
+    //                  $this->db->or_like( 'fname', $query );
+    //         }
+    //         $this->db->order_by( 'id', 'ASC' );
+    //         return $this->db->get();
+    // }
+
+    /* pagination with search */
+
     function getRowf( $params = array() ) {
 
         $this->db->select(['fees.id', 'students.fname', 'students.lname', 'fees.amount', 'fees.paid_date', 'fees.description']);
@@ -178,11 +268,8 @@ class Student_model extends CI_Model  {
 
     }
 
-    /*
-	*-------------------------------------------
-	* Display Student Data
-	*-------------------------------------------
-	*/
+    /* pagination with search */
+
     function getRows( $params = array() ) {
          
         $this->db->select( ['students.id', 'students.fname', 'students.lname', 'students.email', 'students.dob', 'students.gender', 'students.contactno', 'students.class', 'students.subject', 'students.total_fee', 'students.address','students.status','fees.amount'] );
@@ -275,11 +362,27 @@ class Student_model extends CI_Model  {
 
     }
     
-    /*
-	*-------------------------------------------
-	* Update Status
-	*-------------------------------------------
-	*/
+    // public function update_status_model($id,$status)
+    // {
+    // //here we will change the value of the status that if we get the value one of the status then zero is updated in database otherwise one.
+    // if($status == 'active')
+    // {
+    // $sval = 'passout';
+    // }
+    // else{
+    // $sval = 'active';
+    // }
+
+
+    // // update status value in database
+    // $data = array( 'status' => $sval );
+
+    // $this->db->where('id',$id);
+    // return $this->db->update('students',$data);;
+
+
+    // }
+    
     public function update_status_model($id,$status)
     {
     // update status value in database
@@ -294,6 +397,13 @@ class Student_model extends CI_Model  {
 	* count total student
 	*-------------------------------------------
 	*/
+	// public function countTotalStudent()
+	// {
+    //     $this->db->select( '*' );
+    //     $this->db->from( 'students' );
+    //     $query = $this->db->get();
+    //     return $query->num_rows();
+	// }
     public function countTotalStudent(){
         $sql = "SELECT * FROM students";
 		$query = $this->db->query($sql);
@@ -301,7 +411,7 @@ class Student_model extends CI_Model  {
         }
     /*
 	*-------------------------------------------
-	* count total Active student
+	* count total student
 	*-------------------------------------------
 	*/
 	public function countTotalActive()
@@ -312,7 +422,7 @@ class Student_model extends CI_Model  {
 	}
     /*
 	*-------------------------------------------
-	* count total Passout student
+	* count total student
 	*-------------------------------------------
 	*/
 	public function countTotalPassout()
@@ -323,7 +433,7 @@ class Student_model extends CI_Model  {
 	}
     /*
 	*-------------------------------------------
-	* count total Hold student
+	* count total student
 	*-------------------------------------------
 	*/
 	public function countTotalHold()
